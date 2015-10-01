@@ -6,7 +6,7 @@
         
         var $db;
         var $type;
-        var $table = "shoppinglist";
+        var $table = "ShoppingList";
         
         function __construct($dbtype, $dbargs){
             $this->type = $dbtype;
@@ -34,14 +34,16 @@
         }
         
         function init(){
-            $sql = "CREATE table $this->table(
-                item STRING PRIMARY KEY,
+            $sql = "CREATE table IF NOT EXISTS $this->table(
+                item VARCHAR(450) PRIMARY KEY,
                 count INT NOT NULL,
                 checked INT NOT NULL,
-                category STRING);";
+                category VARCHAR(450));";
             try{
                 $this->db->exec($sql);
             }catch(PDOException $e){
+				//At least log the error
+				error_log($e->getMessage());
                 //die(json_encode(array('type' => API_ERROR_UNKNOWN, 'content' => $e->getMessage()))); //uncomment after init() has been put to INSTALL.php
             }
         }

@@ -43,7 +43,8 @@ switch($dataBase){
 
 include('db_connector.php');
 	
-	if (!hash_equals($authKey, crypt($auth, $authKey))){
+	//if (!hash_equals($authKey, crypt($auth, $authKey))){
+	if (!hash_equals($authKey, $auth )) {
 		die (json_encode(array('type' => API_ERROR_403, 'content' => 'Authentication failed.')));
 	}
 	
